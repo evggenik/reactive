@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.time.Duration;
+
 @Service
 @RequiredArgsConstructor
 public class StudentService {
@@ -12,7 +14,8 @@ public class StudentService {
     private final StudentRepository repository;
 
     public Flux<Student> findAll() {
-        return repository.findAll();
+        return repository.findAll()
+                .delayElements(Duration.ofSeconds(1));
     }
 
     public Mono<Student> findById(Integer id) {
